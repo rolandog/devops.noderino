@@ -20,7 +20,7 @@ Before you begin, make sure you have **Git** installed on your computer to downl
 To get a copy of the project on your local machine or server, open your terminal and run:
 
 ```bash
-git clone [https://github.com/professordiogodev/devops.noderino.git](https://github.com/professordiogodev/devops.noderino.git)
+git clone https://github.com/professordiogodev/devops.noderino.git
 
 ```
 
