@@ -1,114 +1,158 @@
 # Noderino Fun App! 🚀
 
-A small Node.js server designed to help you practice CI/CD, environment variables, and containerization! 💚
+A beginner-friendly Node.js server built to help you practice Linux servers, **Environment Variables**, **Docker**, and **CI/CD**! 💚
 
 ---
 
-## 🛠️ Prerequisites
+## 🤔 What are Environment Variables?
 
-Before you begin, make sure you have **Git** installed on your computer to download the code.
+Before we start, you'll see this project uses **Environment Variables**. 
 
-*   Check if Git is installed:
-    ```bash
-    git --version
-    ```
+In software development, you often want your app to behave differently depending on *where* it is running (for example, on your personal laptop vs. a production server) without changing the actual code in `index.js`. 
+
+**Environment variables** are dynamic values stored *outside* of your code that the program reads when it starts up. In Node.js, we access them using `process.env.VARIABLE_NAME`.
+
+### Variables Used in Noderino
+
+If you don't set these variables, the app will automatically fall back to its **Default Value**:
+
+| Variable | What it does | Default Value | Example Custom Value |
+| :--- | :--- | :--- | :--- |
+| `DESIRED_PATH` | Changes the URL route the server listens to. | `/` | `/secret` |
+| `PORT` | Changes the network port the server runs on. | `8080` | `3000` |
+| `NUMBER` | A custom number displayed in the greeting message and logs. | `0` | `42` |
 
 ---
 
-## 📦 Step 1: Clone the Repository
+## 🛠️ Step 1: Clone the Repository
 
-To get a copy of the project on your local machine or server, open your terminal and run:
+To get a copy of this project onto your computer or Linux server, you need **Git**.
 
-```bash
-git clone https://github.com/professordiogodev/devops.noderino.git
+1. Open your terminal.
+2. Download (clone) the repository:
+   ```bash
+   git clone [https://github.com/professordiogodev/devops.noderino.git](https://github.com/professordiogodev/devops.noderino.git)
 
 ```
 
-Then, move into the project directory:
-
+3. Move into the project folder:
 ```bash
 cd devops.noderino
 
 ```
 
+
+
 ---
 
-## ⚙️ Step 2: Configure Environment Variables (Optional)
+## 💻 Step 2: Install Node.js & Dependencies
 
-This app uses environment variables to customize its behavior.
+If you are running this on a **Debian or Ubuntu Linux** server, follow these steps to install Node.js and the project packages:
 
-1. Look for the `.env.example` file in the project folder.
-2. Create a copy of it and name the new file `.env`:
+1. **Install Node.js and npm (Node Package Manager):**
+```bash
+sudo apt update && sudo apt install nodejs -y && sudo apt install npm -y
+
+```
+
+
+2. **Install the project dependencies** (this downloads `express` and `dotenv` listed in `package.json`):
+```bash
+npm install
+
+```
+
+
+
+---
+
+## ⚙️ Step 3: Set Your Environment Variables
+
+There are **two ways** to give environment variables to your Node app when running it directly on your machine:
+
+### Option A: Using a `.env` file (Recommended)
+
+This project uses a package called `dotenv`, which automatically reads variables from a file named `.env`.
+
+1. Copy the example file included in the project to create your own `.env` file:
 ```bash
 cp .env.example .env
 
 ```
 
 
-3. Open the `.env` file in any text editor and customize the variables:
+2. Open the `.env` file using a terminal text editor like `nano`:
+```bash
+nano .env
 
-| Variable | Description | Default / Example |
-| --- | --- | --- |
-| `DESIRED_PATH` | Changes the URL path that the server listens to. | `/` or `/noderino` |
-| `PORT` | Changes the port that the server listens on. | `8080` |
-| `NUMBER` | An arbitrary number displayed by the server. | `42` |
+```
+
+
+3. Edit the values however you like (no spaces around the `=` sign!):
+```env
+DESIRED_PATH=/fun
+PORT=8080
+NUMBER=99
+
+```
+
+
+4. Save and exit (`Ctrl + O`, press `Enter`, then `Ctrl + X` in nano).
+
+### Option B: Passing them directly in the Terminal
+
+You can also set variables temporarily for a single run by typing them right before the `node index.js` command:
+
+```bash
+DESIRED_PATH=/hello PORT=3000 NUMBER=7 node index.js
+
+```
 
 ---
 
-## 💻 Step 3: Run Locally (Debian / Ubuntu Linux)
+## ▶️ Step 4: Run and Test the Server!
 
-If you are running this app directly on a Linux server (like Ubuntu or Debian), follow these steps:
-
-### 1. Install Node.js and npm
-
-Update your package list and install Node.js and npm:
-
-```bash
-sudo apt update && sudo apt install nodejs -y && sudo apt install npm -y
-
-```
-
-### 2. Install Dependencies
-
-Install the required project packages:
-
-```bash
-npm install
-
-```
-
-### 3. Run the Server
-
-Start the application:
-
+1. **Start the server:**
 ```bash
 node index.js
 
 ```
 
-You should see a message in your terminal saying the server is running! 🎉
+
+You will see a message like:
+`Server 99 listening on http://localhost:8080/fun`
+2. **Test your routes** (open these in your browser, or run `curl` in a second terminal):
+* **Your Custom Path (`http://localhost:8080/fun`):**
+Displays `<h1>Hello from /fun number 99!</h1>`
+* **Healthcheck Route (`http://localhost:8080/healthcheck`):**
+Displays `It works!` (Used in DevOps to check if the server is alive!)
+* **Any Other Path (`http://localhost:8080/wrong-path`):**
+Displays a `404 - Not Found` page.
+
+
+3. **Stop the server:**
+Press `Ctrl + C` in your terminal to shut the server down gracefully.
 
 ---
 
-## 🐳 Step 4: Run with Docker (Alternative)
+## 🐳 Bonus: Running with Docker
 
-If you want to practice containerization, you can run the app using Docker:
+If you have Docker installed, you can run this app inside an isolated container and pass environment variables using the `-e` flag or `--env-file`:
 
-1. Build the Docker image:
+1. **Build the Docker image:**
 ```bash
-docker build -t noderino-app .
+docker build -t noderino .
 
 ```
 
 
-2. Run the Docker container (mapping port 8080):
+2. **Run with custom `-e` flags:**
 ```bash
-docker run -p 8080:8080 noderino-app
+docker run -p 8080:8080 -e DESIRED_PATH=/docker -e NUMBER=100 noderino
 
 ```
 
 
+*(Or use your `.env` file directly: `docker run -p 8080:8080 --env-file .env noderino`)*
 
----
-
-Have fun learning and exploring DevOps! 🚀
+Have fun! 🚀
