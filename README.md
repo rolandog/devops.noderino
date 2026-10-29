@@ -30,15 +30,14 @@ To get a copy of this project onto your computer or Linux server, you need **Git
 
 1. Open your terminal.
 2. Download (clone) the repository:
-   ```bash
-   git clone [https://github.com/professordiogodev/devops.noderino.git](https://github.com/professordiogodev/devops.noderino.git)
 
+```bash
+   git clone [https://github.com/professordiogodev/devops.noderino.git](https://github.com/professordiogodev/devops.noderino.git)
 ```
 
 3. Move into the project folder:
 ```bash
 cd devops.noderino
-
 ```
 
 
@@ -52,14 +51,12 @@ If you are running this on a **Debian or Ubuntu Linux** server, follow these ste
 1. **Install Node.js and npm (Node Package Manager):**
 ```bash
 sudo apt update && sudo apt install nodejs -y && sudo apt install npm -y
-
 ```
 
 
 2. **Install the project dependencies** (this downloads `express` and `dotenv` listed in `package.json`):
 ```bash
 npm install
-
 ```
 
 
@@ -77,14 +74,12 @@ This project uses a package called `dotenv`, which automatically reads variables
 1. Copy the example file included in the project to create your own `.env` file:
 ```bash
 cp .env.example .env
-
 ```
 
 
 2. Open the `.env` file using a terminal text editor like `nano`:
 ```bash
 nano .env
-
 ```
 
 
@@ -93,7 +88,6 @@ nano .env
 DESIRED_PATH=/fun
 PORT=8080
 NUMBER=99
-
 ```
 
 
@@ -105,7 +99,6 @@ You can also set variables temporarily for a single run by typing them right bef
 
 ```bash
 DESIRED_PATH=/hello PORT=3000 NUMBER=7 node index.js
-
 ```
 
 ---
@@ -115,7 +108,6 @@ DESIRED_PATH=/hello PORT=3000 NUMBER=7 node index.js
 1. **Start the server:**
 ```bash
 node index.js
-
 ```
 
 
@@ -142,14 +134,12 @@ If you have Docker installed, you can run this app inside an isolated container 
 1. **Build the Docker image:**
 ```bash
 docker build -t noderino .
-
 ```
 
 
 2. **Run with custom `-e` flags:**
 ```bash
 docker run -p 8080:8080 -e DESIRED_PATH=/docker -e NUMBER=100 noderino
-
 ```
 
 
